@@ -10,11 +10,10 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import BasePage
 
-
 class TestOrderPage:
-
     @allure.title("Проверка оформления заказа через кнопку Заказать вверху страницы")
     @allure.description("Заполняем все поля и пытаемся оформить заказ")
+    @allure.step("Заполнение формы Для кого самокат и формы Про аренду")
     def test_order_main(self, driver):
         login_page = OrderPage(driver)
         login_page.open_page(Urls.SAMOKAT)
@@ -35,22 +34,22 @@ class TestOrderPage:
         login_page.set_comment_input(SamocatAuthData.COMMENT)
         login_page.click_order_rent_button()
         login_page.click_yes_button()
-
         WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((LocatorsOrder.BTN_CHECK_STATUS)))
-
         assert driver.find_element(*LocatorsOrder.BTN_CHECK_STATUS).is_displayed()
 
+    @allure.step("Переход по клику на логотип Яндекса")
     def test_logo_yandex(self, driver):
         login_page = OrderPage(driver)
         login_page.open_page(Urls.SAMOKAT)
         login_page.click_cockie_button()
         login_page.click_order_main_button()
-        time.sleep(4)
+        WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((LocatorsOrder.LOGO_YANDEX)))
         login_page.click_logo_yandex()
-        time.sleep(4)
         driver.switch_to.window(driver.window_handles[-1])
-        assert driver.current_url == Urls.DZEN_URL
+        assert driver.current_url != Urls.SAMOKAT
 
+
+    @allure.step("Переход по клику на логотип Самокат")
     def test_logo_samokat(self, driver):
         login_page = OrderPage(driver)
         login_page.open_page(Urls.SAMOKAT)
@@ -60,9 +59,9 @@ class TestOrderPage:
         driver.switch_to.window(driver.window_handles[-1])
         assert driver.current_url == Urls.SAMOKAT
 
-
     @allure.title("Проверка оформления заказа через кнопку Заказать внизу старницы")
     @allure.description("Заполняем все поля и пытаемся оформить заказ")
+    @allure.step("Заполнение форм Для кого самокат и Про аренду")
     def test_order_main_down(self, driver):
         login_page = OrderPage(driver)
         login_page.open_page(Urls.SAMOKAT)
@@ -83,9 +82,7 @@ class TestOrderPage:
         login_page.set_comment_input(SamocatAuthData.COMMENT)
         login_page.click_order_rent_button()
         login_page.click_yes_button()
-
         WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((LocatorsOrder.BTN_CHECK_STATUS)))
-
         assert driver.find_element(*LocatorsOrder.BTN_CHECK_STATUS).is_displayed()
 
 

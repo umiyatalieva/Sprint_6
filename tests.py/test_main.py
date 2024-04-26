@@ -13,7 +13,6 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import BasePage
 
-
 class TestQuestion:
     @allure.title('Проверка ответов по вопросам')
     @allure.description('Через параметризированный тестроверяем соответствие вопросам ответов')
@@ -25,6 +24,7 @@ class TestQuestion:
         question_page.click_cockie_button()
         question_page.skroll(driver)
         question_page.driver.find_element(*LocatorsQuestion.QUESTION1)
+        WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((LocatorsQuestion.QUESTION1)))
         question_page.click_and_get_answer(number)
 
 
