@@ -13,10 +13,6 @@ class QuestionPage(BasePage):
         return self.driver.find_element(*answer).text
 
 
-    @allure.step('Скролл')
-    def skroll(self,driver):
-        element = driver.find_element(*LocatorsQuestion.TITLE_QUESTION)
-        driver.execute_script("arguments[0].scrollIntoView();", element)
 
 
 

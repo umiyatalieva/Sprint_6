@@ -26,6 +26,8 @@ class TestQuestion:
         question_page.driver.find_element(*LocatorsQuestion.QUESTION1)
         WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((LocatorsQuestion.QUESTION1)))
         question_page.click_and_get_answer(number)
+        assert question_page.click_and_get_answer(number) == question
+
 
 
 
